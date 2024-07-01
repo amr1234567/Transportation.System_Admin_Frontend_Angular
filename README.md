@@ -40,7 +40,6 @@ This project is an Angular-based web application designed for administrators to 
 1. **Clone the repository**:
     ```sh
     git clone https://github.com/amr1234567/Transportation.System_Admin_Frontend_Angular.git
-    cd admin-dashboard
     ```
 
 2. **Install NPM packages**:
