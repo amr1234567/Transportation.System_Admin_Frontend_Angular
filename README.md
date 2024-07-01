@@ -96,13 +96,10 @@ This project is an Angular-based web application designed for administrators to 
     ```
 5. **Create a new Pull Request**.
 
-## License
-Distributed under the MIT License. See `LICENSE` for more information.
-
 ## Contact
-Your Name - [your-email@example.com](mailto:your-email@example.com)
+Your Name - [your-email@example.com](amr.m7md.shalaby@gmail.com)
 
-Project Link: [https://github.com/your-repo/admin-dashboard](https://github.com/your-repo/admin-dashboard)
+All Project Link: [https://github.com/amr1234567/Transportation.Managment.System.git](https://github.com/amr1234567/Transportation.Managment.System.git)
 
 ## Acknowledgments
 - Special thanks to the Angular community for the resources and support.
