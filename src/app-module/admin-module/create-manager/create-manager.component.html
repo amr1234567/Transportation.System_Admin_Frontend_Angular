@@ -1,0 +1,106 @@
+<div class="create-manager-component flex-column d-flex justify-content-between align-items-center w-100 h-100">
+   <div *ngIf="!confirmCreate" class="form-container d-flex flex-column align-items-center gap-4 p-4 w-50">
+      <h1 *ngIf="!CreateErrors" class="text-center">Create Manager</h1>
+      <p *ngIf="CreateErrors" class="alert alert-danger">{{CreateErrors}}</p>
+      <form class="login-form d-flex flex-column gap-4 align-items-center w-100" action="post" #loginForm="ngForm"
+         (ngSubmit)="CreateManager()">
+         <div [class]="(emailInput.dirty&&emailInput.invalid)? 'input-group has-validation' :'input-group'">
+            <span class="input-group-text">Email</span>
+            <div [class]="(emailInput.dirty&&emailInput.invalid)? 'form-floating is-invalid':'form-floating'">
+               <input type="text" #emailInput="ngModel" [(ngModel)]="ManagerDetails.Email"
+                  [class]="(emailInput.dirty&&emailInput.invalid)? 'form-control is-invalid':'form-control'"
+                  id="EmailInput" placeholder="email" required name="Email" email [pattern]="emailRegex">
+               <label for="EmailInput">Email</label>
+            </div>
+            <div class="invalid-feedback" *ngIf="emailInput.dirty &&emailInput.hasError('required')">
+               Email must be Entered
+            </div>
+            <div class="invalid-feedback"
+               *ngIf="emailInput.dirty &&(emailInput.hasError('email')||emailInput.hasError('pattern'))">
+               Email must be valid {{"(ex: example@mail.com)"}}
+            </div>
+         </div>
+         <div [class]="(nameInput.dirty&&nameInput.invalid)? 'input-group has-validation' :'input-group'">
+            <span class="input-group-text">Name</span>
+            <div [class]="(nameInput.dirty&&nameInput.invalid)? 'form-floating is-invalid' :'form-floating'">
+               <input type="text" #nameInput="ngModel" [(ngModel)]="ManagerDetails.Name"
+                  [class]="(nameInput.dirty&&nameInput.invalid)?'form-control is-invalid':'form-control'" id="NameInput"
+                  placeholder="Name" required name="Name" [pattern]="nameRegex" minlength="3">
+               <label for="NameInput">Name</label>
+            </div>
+            <div class="invalid-feedback" *ngIf="nameInput.dirty &&nameInput.hasError('required')">
+               Name must be Entered
+            </div>
+            <div class="invalid-feedback" *ngIf="nameInput.dirty && nameInput.hasError('pattern')">
+               Name must be valid <code>Just Contains Chars</code>
+            </div>
+            <div class="invalid-feedback" *ngIf="nameInput.dirty && nameInput.hasError('minlength')">
+               Name must be valid <code>Min length 3 chars</code>
+            </div>
+         </div>
+         <div [class]="(PasswordInput.dirty&&PasswordInput.invalid)?'input-group has-validation' :'input-group'">
+            <span class="input-group-text">Password</span>
+            <div [class]="(PasswordInput.dirty&&PasswordInput.invalid)? 'form-floating is-invalid' :'form-floating'">
+               <input type="password" #PasswordInput="ngModel" [(ngModel)]="ManagerDetails.Password"
+                  [class]="(PasswordInput.dirty&&PasswordInput.invalid)?'form-control is-invalid':'form-control'"
+                  id="PasswordInput" placeholder="Password" required name="Password" minlength="8"
+                  [pattern]="passwordRegex">
+               <label for="EmailInput">Password</label>
+            </div>
+            <div class="invalid-feedback" *ngIf="PasswordInput.dirty &&PasswordInput.hasError('required')">
+               Password must be Entered
+            </div>
+            <div class="invalid-feedback"
+               *ngIf="PasswordInput.dirty &&(PasswordInput.hasError('pattern')&&!PasswordInput.hasError('minlength'))">
+               Password must be valid
+               <code>at Least : {{"(1 Upper Letter , 1 Small Letter, One Character, one number)"}}</code>
+            </div>
+            <div class="invalid-feedback" *ngIf="PasswordInput.dirty &&(PasswordInput.hasError('minlength'))">
+               Password must be valid <code>more than 8 chars</code>
+            </div>
+         </div>
+         <div
+            [class]="(ConfirmPasswordInput.dirty &&(ConfirmPasswordInput.invalid || ManagerDetails.ConfirmPassword !== ManagerDetails.Password))? 'input-group has-validation' :'input-group'">
+            <span class="input-group-text">Confirm Password</span>
+            <div
+               [class]="(ConfirmPasswordInput.dirty &&(ConfirmPasswordInput.invalid || ManagerDetails.ConfirmPassword != ManagerDetails.Password))? 'form-floating is-invalid':'form-floating'">
+               <input type="password" [(ngModel)]="ManagerDetails.ConfirmPassword"
+                  [class]="(ConfirmPasswordInput.dirty &&(ConfirmPasswordInput.invalid || ManagerDetails.ConfirmPassword != ManagerDetails.Password))?'form-control is-invalid':'form-control'"
+                  id="confirmPassword" placeholder="confirmPassword" required name="ConfirmPassword"
+                  #ConfirmPasswordInput="ngModel">
+               <label for="confirmPassword">Confirm Password</label>
+            </div>
+            <div class="invalid-feedback"
+               *ngIf="ConfirmPasswordInput.dirty &&ConfirmPasswordInput.hasError('required')">
+               Confirm Password must be Entered
+            </div>
+            <div class="invalid-feedback" *ngIf="ConfirmPasswordInput.dirty 
+               &&(ManagerDetails.ConfirmPassword !== ManagerDetails.Password)
+               &&!ConfirmPasswordInput.hasError('required')">
+               Password Must Match Confirm Password
+            </div>
+         </div>
+         <button *ngIf="!isCLicked" type="submit" class="btn button-container rounded-5"
+            [disabled]="!loginForm.dirty || loginForm.invalid || ManagerDetails.ConfirmPassword !== ManagerDetails.Password">
+            Create
+         </button>
+         <mat-spinner *ngIf="isCLicked" color="warn"></mat-spinner>
+      </form>
+   </div>
+   <div *ngIf="confirmCreate" class="w-100 d-flex flex-column gap-4 align-items-center">
+      <p *ngIf="showALert" class="alert border border-success alert-success text-black">Manager {{ManagerDetails.Name}}
+         Has Been Created
+         {{":)"}}</p>
+      <table class="table w-25 p-3">
+         <tr>
+            <th scope="row">Station Name</th>
+            <td>{{ManagerDetails.Name |titlecase}}</td>
+         </tr>
+         <tr>
+            <th scope="row">Manager Email</th>
+            <td>{{ManagerDetails.Email}}</td>
+         </tr>
+      </table>
+      <a (click)="AddAnotherAdminFun()" class="button-link">Add Another Manager</a>
+   </div>
+</div>

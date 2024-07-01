@@ -1,0 +1,25 @@
+<div style="min-height: 80vh;" class="w-100 d-flex flex-column align-items-center justify-content-center h-100">
+   <div class="w-50 d-flex flex-column align-items-center justify-content-center">
+      <h1 class="text-center mb-5">Enroll</h1>
+      <form (ngSubmit)="Enroll()" #EnrollForm="ngForm" action="post" class="d-flex flex-column align-items-center">
+         <select *ngIf="busStops" (ngModelChange)="startBusStopSelected(selectBusStopEle)" #selectBusStopEle
+            name="startBusStop" [(ngModel)]="selectedStartBusStop" class="form-select form-select-lg mb-3"
+            aria-label="Large select example">
+            <option selected value="">Select Start Bus Stop</option>
+            <option *ngFor="let item of busStops" [value]="item.id">{{item.name}}</option>
+         </select>
+         <p *ngIf="EnrollForm.dirty &&!startBusStopChecked" class="text-danger">check bus stop please</p>
+         <select (ngModelChange)="DestStopSelected(selectDestEle)" #selectDestEle [(ngModel)]="selectedDestination"
+            name="destinationBusStop" class="form-select form-select-lg mb-3" aria-label="Large select example">
+            <option selected value="">Select Destination Bus Stop</option>
+            <option *ngFor="let item of notRelatedBusStops" [value]="item.id">{{item.name}}</option>
+         </select>
+         <p *ngIf="EnrollForm.dirty && !destinationBusStopChecked" class="text-danger">check bus stop please</p>
+         <button type="submit" class="btn button-container rounded-5 mt-3 m-auto"
+            [disabled]=" (EnrollForm.invalid || !startBusStopChecked || !destinationBusStopChecked)">Enroll</button>
+      </form>
+      <p *ngIf="MessageOfCallApi !== ''" [class]="EnrollSuccess ? 'text-success mt-3':'text-danger mt-3'">
+         {{MessageOfCallApi |
+         titlecase}}</p>
+   </div>
+</div>

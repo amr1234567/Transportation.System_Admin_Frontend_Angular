@@ -1,0 +1,33 @@
+<mat-sidenav-container class="sidenav-container set-bg text-white">
+  <mat-sidenav #drawer class="sidenav set-bg-light text-white" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-toolbar class="set-bg-light text-white">
+      <img [src]="logoPath" class="p-2 pt-4" alt="" width="75">
+    </mat-toolbar>
+    <mat-nav-list class="set-bg-light nav-list text-white d-flex flex-column gap-5 mt-4" style="font-size: larger;">
+      <div class="text-white d-flex flex-column gap-4 mt-4">
+        <a (click)="NavToDash()" class="link-light text-decoration-none">Dashboard</a>
+        <a (click)="NavToCreateManager()" class="link-light text-decoration-none">Create Manager</a>
+        <a (click)="NavToEnrollBusStop()" class="link-light text-decoration-none">Enroll</a>
+      </div>
+      <a (click)="LogOut()" class="link-light text-decoration-none">LogOut</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="set-bg text-white">
+    <mat-toolbar class="set-bg text-white">
+      @if (isHandset$ | async) {
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      }
+      <span class=" text-white">{{title|titlecase}}</span>
+    </mat-toolbar>
+    <div class="d-flex flex-column justify-content-between">
+      <router-outlet></router-outlet>
+      <footer class="p-3 text-center">
+        Designed By <span class="fw-bold m-2">&copy; Amr Shalaby</span> | {{date}}
+      </footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

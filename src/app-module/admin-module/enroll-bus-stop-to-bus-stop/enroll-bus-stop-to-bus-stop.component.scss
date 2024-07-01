@@ -1,0 +1,44 @@
+button {
+   background-color: transparent;
+   border: 0px transparent;
+   border-radius: 1rem;
+   color: black;
+   font-weight: 600;
+}
+
+.button-container {
+   transition: 0.2s ease-in-out;
+   background-color: #D45161;
+   color: black;
+}
+
+.button-container:hover {
+   transform: scale(1.25);
+   color: black;
+}
+
+.button-container:has(button:disabled) {
+   transform: scale(1);
+   font-weight: 700;
+
+}
+
+table>tr>th {
+   color: #D45161;
+}
+
+.button-link {
+   text-decoration: none;
+   color: #D45161;
+   padding: 0.5rem 1rem;
+   border: 2px solid #D45161;
+   border-radius: 7px;
+   cursor: pointer;
+   transition: 0.2s ease-in-out;
+}
+
+.button-link:hover {
+   border-color: white;
+   color: white;
+   background-color: #D45161;
+}
